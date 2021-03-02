@@ -21,8 +21,8 @@ class TPCH:
     '''
         Database connection and refresh files
     '''
-    DB_CONFIG = {'user': 'dbuser', 'password': 'dbpass', 'host': '127.0.0.1', 'database': 'tpch'}
-    REFRESH_FILES_PATH = '~/path/to/dbgen/%d' % SCALE_FACTOR
+    DB_CONFIG = {'user': 'dbuser', 'password': 'dbuser', 'host': '127.0.0.1', 'database': 'tpch'}
+    REFRESH_FILES_PATH = '/home/sclai/Downloads/2.18.0_rc2/dbgen/%d' % SCALE_FACTOR
 
 
     '''
