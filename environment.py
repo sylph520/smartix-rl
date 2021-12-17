@@ -11,7 +11,7 @@ class Environment():
         # Database
         self.table_columns = self.db.tables
         self.tables = list(self.table_columns.keys())
-        self.columns = np.concatenate(list(self.table_columns.values())).tolist()
+        self.columns = list(set(np.concatenate(list(self.table_columns.values())).tolist()))
 
         # Workload
         self.workload = self.load_workload(workload_path)

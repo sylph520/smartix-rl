@@ -11,7 +11,6 @@ class PG_Database():
         # Connect to database
         try:
             self.conn = psycopg2.connect(user = self.credentials['user'],
-                                         password = self.credentials['password'],
                                          host = self.credentials['host'],
                                          port = self.credentials['port'],
                                          database = self.credentials['database'])

@@ -254,6 +254,7 @@ class Agent:
             
         # Close and finish
         self.env.close()
+        print(f"self.env.db_get_indexes(): {self.env.db.get_indexes()}")
 
     def test(self, model_path=''):
         # Stats
@@ -334,8 +335,8 @@ class Agent:
 
 if __name__ == "__main__":
     import os
-    print("Restarting PostgreSQL...")
-    os.system('sudo systemctl restart postgresql@12-main')
+    # print("Restarting PostgreSQL...")
+    # os.system('sudo systemctl restart postgresql@12-main')
     
     # agent1 = Agent(env=Environment(window_size=40, shift=False), tag='winsize40_noshift')
     # agent2 = Agent(env=Environment(window_size=80, shift=False), tag='winsize80_noshift')
@@ -354,5 +355,10 @@ if __name__ == "__main__":
     # agent1 = Agent(env=Environment(reward_func=2), tag='func2')
     # agent1.train()
 
-    agent_test = Agent(env=Environment(window_size=40, shift=False), tag='winsize40_model40_test_10gb')
-    agent_test.test(model_path='results/0.0001_0.9_100000_10000_128_1024_0.01_0.01_winsize40 (BEST)')
+    # agent_test = Agent(env=Environment(window_size=40, shift=False), tag='winsize40_model40_test_10gb')
+
+    # agent_test.test(model_path='results/0.0001_0.9_100000_10000_128_1024_0.01_0.01_winsize40 (BEST)')
+    agent = Agent(tag='tpch_st_workload')
+    # agent = Agent(Environment(workload_path='data/workload/st20.sql'), tag='tpch_st_workload')
+    agent.train()
+    print("Done")
