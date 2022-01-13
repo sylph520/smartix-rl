@@ -254,7 +254,6 @@ class Agent:
             
         # Close and finish
         self.env.close()
-        print(f"self.env.db_get_indexes(): {self.env.db.get_indexes()}")
 
     def test(self, model_path=''):
         # Stats
