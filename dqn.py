@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.tensorboard import SummaryWriter
 
 from environment import Environment
 import gym
@@ -58,7 +59,7 @@ class Agent:
         self.alpha = 0.0001  # 0.0001
 
         # Training
-        self.n_steps = 100000  # 100k
+        self.n_steps = 50000  # 50k
         self.memory_size = 10000  # 10k
         self.memory = ReplayMemory(self.memory_size)
         self.target_update_interval = 128  # 128
@@ -87,7 +88,7 @@ class Agent:
             path = os.path.join('output', output_path)
         if not os.path.isdir(path): os.makedirs(path)
         self.output_path = path + '/'
-
+        self.tag = tag
         # Environment
         self.env = env
         self.n_features = self.env.n_features
@@ -179,6 +180,7 @@ class Agent:
         # Start training
         print("Started training...")
         start = time.time()
+        writer = SummaryWriter(log_dir=f'tbresult/{self.tag}_{start}')
         for step in range(self.n_steps):
 
             # Choose action
@@ -203,6 +205,7 @@ class Agent:
             # Learn
             if len(self.memory) > self.batch_size:
                 batch_loss += self.learn_batch()
+                writer.add_scalar('charts/batch_loss', batch_loss, global_step=step)
 
             # Save interval
             if (step != 0 and step % self.target_update_interval == 0):
@@ -210,8 +213,10 @@ class Agent:
                 # Update step time
                 end = time.time()
                 elapsed = end - start
+                writer.add_scalar('charts/interval', elapsed, global_step=step)
                 start = time.time()
 
+                writer.add_scalar("charts/episode_reward", episode_reward, global_step=step)
                 # Print stats
                 print("episode: %2d \t acc_reward: %10.3f \t batch_loss: %8.8f \t elapsed: %6.2f \t epsilon: %2.4f" % (episode_num, episode_reward, batch_loss, float(elapsed), self.epsilon))
                 
@@ -357,7 +362,8 @@ if __name__ == "__main__":
     # agent_test = Agent(env=Environment(window_size=40, shift=False), tag='winsize40_model40_test_10gb')
 
     # agent_test.test(model_path='results/0.0001_0.9_100000_10000_128_1024_0.01_0.01_winsize40 (BEST)')
-    agent = Agent(tag='tpch_st_workload')
+    # agent = Agent(tag='tpch_st_workload')
     # agent = Agent(Environment(workload_path='data/workload/st20.sql'), tag='tpch_st_workload')
+    agent = Agent(Environment(workload_path='data/workload/cust20.sql'), tag='cust20')
     agent.train()
     print("Done")
