@@ -35,6 +35,16 @@ class PG_Database():
         return cost
     
     def get_query_use(self, query, column):
+        """check whether the query will use the index on the column according
+        to the explained plan, skip if it's a primary key or foreign key situation.
+
+        Args:
+            query (str): the query
+            column (column): the column of index key
+
+        Returns:
+            int: 1 if using, 0 otherwise
+        """
         # Get explain plan
         command = "EXPLAIN {}".format(query)
         output = self.execute_fetchall(command)

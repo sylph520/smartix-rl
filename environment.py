@@ -5,6 +5,9 @@ import random
 
 class Environment():
     def __init__(self, workload_path='data/workload/tpch.sql', shift=False, hypo=True, allow_columns=True, flip=True, no_op=True, window_size=80, reward_func=1):
+        """
+        flip: whether flip the index slot as the action
+        """
         # DBMS
         self.db = PG_Database(hypo=hypo)
 
@@ -75,7 +78,7 @@ class Environment():
         else:
             self.current_workload = self.workload
 
-        # Window-related
+        # Window-related, sample a workload buffer of window_size with the history of usages, costs and columns
         self.workload_buffer, self.usage_history, self.cost_history, self.column_history = self.initialize_window(self.window_size)
 
         return self.get_state()
@@ -241,7 +244,7 @@ class Environment():
         else:
             # Apply index change
             if self.flip: changed, drop, table, column = self.apply_index_change_flip(action)
-            else: changed, drop, table, column = self.apply_index_change(action)
+            else: changed, drop, table, column = self.apply_index_change(action) # for online index adaptations
 
             # Execute next_query
             query = self.step_workload()
@@ -301,10 +304,21 @@ class Environment():
         return changed, drop, table, column
 
     def apply_index_change_flip(self, action):
+        """apply the index flipping change
+
+        Args:
+            action (int): the selected actino
+
+        Returns:
+            changed: whether it's changed
+            drop: whether it's an index dropping operation
+            table: the table where the selected index column resides
+            column: the action-indicated column
+        """
         indexes = self.db.get_indexes()
 
         # Get table and column
-        column = self.columns[action]
+        column = self.columns[action] # the selected index key column
 
         for table_name, columns in self.table_columns.items():
             if column in columns:
@@ -325,6 +339,13 @@ class Environment():
         return True, drop, table, column
 
     def step_workload(self):
+        """shifting the query to the next query in the workload,
+        and append the history of column and cost of the new query,
+        and update workload buffer
+
+        Returns:
+            query: return the next query
+        """
         query = self.current_workload[self.workload_iterator]
 
         # Execute query
