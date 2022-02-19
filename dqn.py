@@ -185,7 +185,8 @@ class Agent:
         # Start training
         print("Started training...")
         start = time.time()
-        writer = SummaryWriter(log_dir=f'tbresult/{self.tag}_{str(int(start))}')
+        writer = SummaryWriter(log_dir=f'smartix_tbresult/{self.tag}_{str(int(start))}')
+        start = time.time()
         iter_len = 0
         for step in range(self.n_steps):
 

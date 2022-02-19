@@ -335,7 +335,7 @@ class Environment():
         else:
             self.db.create_index(table, column)
             drop = False
-        
+        # changed, drop or not, indexing table, indexing column
         return True, drop, table, column
 
     def step_workload(self):
