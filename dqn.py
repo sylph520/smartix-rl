@@ -53,6 +53,7 @@ class QNet(nn.Module):
 
 class Agent:
     def __init__(self, env=Environment(), output_path=None, tag=None):
+        self.set_seed()
         # Hyperparameters
         self.gamma = 0.9  # 0.9
         self.alpha = 0.0001  # 0.0001
@@ -101,6 +102,10 @@ class Agent:
         self.qnet_target = QNet(self.n_features, self.n_actions)
         self.qnet_target.load_state_dict(self.qnet.state_dict())
         self.optimizer = torch.optim.Adam(self.qnet.parameters(), lr=self.alpha)
+
+    def set_seed(self, seed=123):
+        random.seed(seed)
+        torch.manual_seed(seed)
 
     """
         Model
@@ -166,11 +171,9 @@ class Agent:
         episode_rewards = list()
         transitions_history = list()
         batch_loss = 0
-        iter_reward = 0
-        ep_reward = 0.0
+        acc_reward = 0.0
         ep_rewards = []
-        iter_num = 0
-        ep_num = 0
+        update_iters = 0
 
         # Start plot
         # plt.ion()
@@ -187,12 +190,10 @@ class Agent:
         start = time.time()
         writer = SummaryWriter(log_dir=f'smartix_tbresult/{self.tag}_{str(int(start))}')
         start = time.time()
-        iter_len = 0
         for step in range(self.n_steps):
 
             # Choose action
             action = self.choose_action(state)
-            iter_len += 1
 
             # Apply action
             next_state, reward, done, _ = self.env.step(action)
@@ -204,13 +205,8 @@ class Agent:
             state = next_state
 
             # Stats
-            iter_reward += reward
-            ep_reward += reward
-            # if done:
-            #     ep_rewards.append(ep_reward)
-            #     writer.add_scalar('charts/ep_reward', ep_reward, global_step=ep_num)
-            #     ep_num += 1
-            #     ep_reward = 0.0
+            acc_reward += reward
+            
             actions_history.append(action)
             rewards_history.append(reward)
             states_history.append(next_state.tolist())
@@ -227,16 +223,17 @@ class Agent:
                 # Update step time
                 end = time.time()
                 elapsed = end - start
-                writer.add_scalar('charts/interval', elapsed, global_step=iter_num)
-                writer.add_scalar('charts/iter_len', iter_len, global_step=iter_num)
+                writer.add_scalar('charts/elapsed', elapsed, global_step=step)
                 start = time.time()
 
-                writer.add_scalar("charts/iter_reward", iter_reward, global_step=iter_num)
+                writer.add_scalar("charts/acc_reward", acc_reward, global_step=step)
+                writer.add_scalar("charts/epsilon", self.epsilon, global_step=step)
                 # Print stats
-                print("iter: %2d \t step: %2d \t acc_reward: %10.3f \t batch_loss: %8.8f \t elapsed: %6.2f \t epsilon: %2.4f" % (iter_num, step, iter_reward, batch_loss, float(elapsed), self.epsilon))
+                print("update iters: %2d \t step: %2d \t acc_reward: %10.3f \t batch_loss: %8.8f \t elapsed: %6.2f \t epsilon: %2.4f" 
+                            % (update_iters, step, acc_reward, batch_loss, float(elapsed), self.epsilon))
                 
                 # Save logs
-                log = "%2d\t%2d\t%8.3f\t%8.8f\t%.2f\t%.4f\n" % (iter_num,step, iter_reward, batch_loss, elapsed, self.epsilon)
+                log = "%2d\t%2d\t%8.3f\t%8.8f\t%.2f\t%.4f\n" % (update_iters,step, acc_reward, batch_loss, elapsed, self.epsilon)
 
                 with open(self.output_path+'log.txt', 'a+') as f:
                     f.write(log)
@@ -252,10 +249,9 @@ class Agent:
                     json.dump(ep_rewards, f)
 
                 # Stats
-                episode_rewards.append(iter_reward)
-                iter_reward = 0
-                iter_num += 1
-                iter_len = 0
+                episode_rewards.append(acc_reward)
+                acc_reward = 0
+                update_iters += 1
                 batch_loss = 0
 
                 # Plot
@@ -318,7 +314,8 @@ if __name__ == "__main__":
     # agent = Agent(tag='tpch_st_workload')
     # agent = Agent(Environment(workload_path='data/workload/st20.sql'), tag='tpch_st_workload')
     # agent = Agent(Environment(workload_path='data/workload/tpch.sql'), tag='tpch_st_workload')
-    agent = Agent(Environment(workload_path='data/workload/cust20.sql'), tag='cust20')
+    # agent = Agent(Environment(workload_path='data/workload/cust20.sql'), tag='cust20') #cust reward
+    agent = Agent(Environment(workload_path='data/workload/cust20.sql', reward_func=2), tag='cust20') #cost as reward
     model_p = agent.train()
     # model_p = 'output/1642429792.1792326_0.0001_0.9_50000_10000_128_1024_0.01_0.01_tpch_st_workload'
     # model_p = 'output/1642391030.6733253_0.0001_0.9_50000_10000_128_1024_0.01_0.01_cust20'
