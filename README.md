@@ -10,11 +10,15 @@ I. **Requirements**
 *   TPC-H version: 2.18.0 (see Section III)
 *   Python 3.6  (see Section V)
 
+- `sudo apt install gcc make`
+
 II. **Installing MySQL**
 
+https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#annotations:bUUqIJO4EeyyYA_P5KREfA
 ```
-$ sudo apt-get install mysql-server
-$ sudo mysql_secure_installation
+sudo debconf-set-selections <<< "mysql-server mysql-server/lowercase-table-names select Enabled"
+sudo apt-get install mysql-server
+sudo mysql_secure_installation
 ```
 
 ```
@@ -39,21 +43,21 @@ Press **Ctrl+C** to exit MySQL status.
 1. Create a new user:
 
 ```
-$ sudo mysql -u root -p
-mysql> CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'dbuser';
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'localhost' WITH GRANT OPTION;
-mysql> CREATE USER 'dbuser'@'%' IDENTIFIED BY 'dbuser';
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'%' WITH GRANT OPTION;
-mysql> FLUSH PRIVILEGES;
-mysql> EXIT;
+sudo mysql -u root -p
+CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'dbuser';
+GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'localhost' WITH GRANT OPTION;
+CREATE USER 'dbuser'@'%' IDENTIFIED BY 'dbuser';
+GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
 ```
 
 2. Create the database:
 
 ```
-$ mysql -u dbuser -p
-mysql> CREATE DATABASE tpch;
-mysql> EXIT;
+mysql -u dbuser -p
+CREATE DATABASE tpch;
+EXIT;
 ```
 
 III. **Using  TPC-H Tools**
@@ -104,15 +108,123 @@ $ mysql -u dbuser -pdbuser tpch < dss.ddl
 11. Log in on MySQL, and import the data to the database (pay attention to replace _~/path/ _for the actual path where the folder is):
 
 ```
-load data local infile '~/path/dbgen/region.tbl' into table REGION fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/nation.tbl' into table NATION fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/customer.tbl' into table CUSTOMER fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/supplier.tbl' into table SUPPLIER fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/part.tbl' into table PART fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/orders.tbl' into table ORDERS fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/partsupp.tbl' into table PARTSUPP fields terminated by '|' lines terminated by '\n';
-load data local infile '~/path/dbgen/lineitem.tbl' into table LINEITEM fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/region.tbl' into table REGION fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/nation.tbl' into table NATION fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/customer.tbl' into table CUSTOMER fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/supplier.tbl' into table SUPPLIER fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/part.tbl' into table PART fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/orders.tbl' into table ORDERS fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/partsupp.tbl' into table PARTSUPP fields terminated by '|' lines terminated by '\n';
+load data local infile '~/tpch-kit/dbgen/lineitem.tbl' into table LINEITEM fields terminated by '|' lines terminated by '\n';
 exit;
+```
+***************** add pk and fk ****************
+```
+-- Sccsid:     @(#)dss.ri	2.1.8.1
+-- tpch Benchmark Version 8.0
+
+USE tpch;
+
+-- ALTER TABLE tpch.REGION DROP PRIMARY KEY;
+-- ALTER TABLE tpch.NATION DROP PRIMARY KEY;
+-- ALTER TABLE tpch.PART DROP PRIMARY KEY;
+-- ALTER TABLE tpch.SUPPLIER DROP PRIMARY KEY;
+-- ALTER TABLE tpch.PARTSUPP DROP PRIMARY KEY;
+-- ALTER TABLE tpch.ORDERS DROP PRIMARY KEY;
+-- ALTER TABLE tpch.LINEITEM DROP PRIMARY KEY;
+-- ALTER TABLE tpch.CUSTOMER DROP PRIMARY KEY;
+
+
+-- For table REGION
+ALTER TABLE tpch.REGION
+ADD PRIMARY KEY (R_REGIONKEY);
+
+-- For table NATION
+ALTER TABLE tpch.NATION
+ADD PRIMARY KEY (N_NATIONKEY);
+
+ALTER TABLE tpch.NATION
+ADD FOREIGN KEY NATION_FK1 (N_REGIONKEY) references 
+tpch.REGION(R_REGIONKEY);
+
+COMMIT WORK;
+
+-- For table PART
+ALTER TABLE tpch.PART
+ADD PRIMARY KEY (P_PARTKEY);
+
+COMMIT WORK;
+
+-- For table SUPPLIER
+ALTER TABLE tpch.SUPPLIER
+ADD PRIMARY KEY (S_SUPPKEY);
+
+ALTER TABLE tpch.SUPPLIER
+ADD FOREIGN KEY SUPPLIER_FK1 (S_NATIONKEY) references 
+tpch.NATION(N_NATIONKEY);
+
+COMMIT WORK;
+
+-- For table PARTSUPP
+ALTER TABLE tpch.PARTSUPP
+ADD PRIMARY KEY (PS_PARTKEY,PS_SUPPKEY);
+
+COMMIT WORK;
+
+-- For table CUSTOMER
+ALTER TABLE tpch.CUSTOMER
+ADD PRIMARY KEY (C_CUSTKEY);
+
+ALTER TABLE tpch.CUSTOMER
+ADD FOREIGN KEY CUSTOMER_FK1 (C_NATIONKEY) references 
+tpch.NATION(N_NATIONKEY);
+
+COMMIT WORK;
+
+-- For table LINEITEM
+ALTER TABLE tpch.LINEITEM
+ADD PRIMARY KEY (L_ORDERKEY,L_LINENUMBER);
+
+COMMIT WORK;
+
+-- For table ORDERS
+ALTER TABLE tpch.ORDERS
+ADD PRIMARY KEY (O_ORDERKEY);
+
+COMMIT WORK;
+
+-- For table PARTSUPP
+ALTER TABLE tpch.PARTSUPP
+ADD FOREIGN KEY PARTSUPP_FK1 (PS_SUPPKEY) references 
+tpch.SUPPLIER(S_SUPPKEY);
+
+COMMIT WORK;
+
+ALTER TABLE tpch.PARTSUPP
+ADD FOREIGN KEY PARTSUPP_FK2 (PS_PARTKEY) references 
+tpch.PART(P_PARTKEY);
+
+COMMIT WORK;
+
+-- For table ORDERS
+ALTER TABLE tpch.ORDERS
+ADD FOREIGN KEY ORDERS_FK1 (O_CUSTKEY) references 
+tpch.CUSTOMER(C_CUSTKEY);
+
+COMMIT WORK;
+
+-- For table LINEITEM
+ALTER TABLE tpch.LINEITEM
+ADD FOREIGN KEY LINEITEM_FK1 (L_ORDERKEY) references 
+tpch.ORDERS(O_ORDERKEY);
+
+COMMIT WORK;
+
+ALTER TABLE tpch.LINEITEM
+ADD FOREIGN KEY LINEITEM_FK2 (L_PARTKEY,L_SUPPKEY) references 
+        tpch.PARTSUPP(PS_PARTKEY,PS_SUPPKEY);
+
+COMMIT WORK;
 ```
 
 12. Check the amount of rows for each table: 
@@ -128,11 +240,11 @@ exit;
 13. Generate the files to be used in refresh functions. It will generate files named `delete.[num]`, and inserts to `orders.[num]`, and `lineitem.[num]` tables. Create a folder named `1` (one) and move the files intto this folder. We do this in order to separate the refresh files created with respect to a scale factor of 1.
 
 ```
-$ ./dbgen -s 1 -U 10000
-$ mkdir 1
-$ mv delete.* 1
-$ mv orders.* 1
-$ mv lineitem.* 1
+./dbgen -s 1 -U 10000
+mkdir 1
+mv delete.* 1
+mv orders.* 1
+mv lineitem.* 1
 
 ```
 
@@ -155,9 +267,9 @@ We need to create procedures, tables, and views to run our experiments.
 17. Create temporary tables:
 
 ```
-$ mysql -u dbuser -p tpch 
-mysql> source ~/QSRF/CREATE TEMPORARY TABLES.sql;
-mysql> exit;
+mysql -u dbuser -p tpch 
+source ~/QSRF/CREATE TEMPORARY TABLES.sql;
+exit;
 ```
 
 18. Create views (check the path in the `.sh` file):
@@ -170,21 +282,21 @@ $ ./CREATE_VIEWS.sh
 19. Create procedures:
 
 ```
-$ mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_DELETE_REFRESH_FUNCTION.sql;
-$ mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_INSERT_REFRESH_FUNCTION.sql;
-$ mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_QUERY_STREAM.sql;
+mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_DELETE_REFRESH_FUNCTION.sql;
+mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_INSERT_REFRESH_FUNCTION.sql;
+mysql -u dbuser -p tpch < ~/QSRF/CREATE_PROCEDURE_QUERY_STREAM.sql;
 ```
 
 20. Check if views and procedures are created:
 
 ```
-$ mysql -u dbuser -p tpch 
-mysql> use tpch;
-mysql> show tables;
+mysql -u dbuser -p tpch 
+use tpch;
+show tables;
 ```
 34 rows in set (0.00 sec)
 ```
-mysql> show procedure status where db = 'tpch';
+show procedure status where db = 'tpch';
 
 (...)
 
@@ -196,7 +308,7 @@ mysql> show procedure status where db = 'tpch';
 ```
 3 rows in set (0.00 sec)
 ```
-mysql> exit;
+exit;
 ```
 
 V. **Configuring the Python Environment**
@@ -205,6 +317,8 @@ V. **Configuring the Python Environment**
 *   unixodbc (`$ sudo apt-get install unixodbc-dev`)
 *   pyodbc (`$ pip3 install --user pyodbc`)
 *   mysql-connector-python (`$ pip3 install mysql-connector-python`)
+`sudo apt install python3-pip unixodbc-dev mysql-connector-python`
+`pip3 install pyodbc`
 
 21. Register the driver at MySQL (based on [MySQL Documentation](https://dev.mysql.com/doc/connector-odbc/en/connector-odbc-installation-binary-unix-tarball.html)).
 
@@ -213,8 +327,8 @@ V. **Configuring the Python Environment**
 23. Go to the folder you downloaded and copy as follows:
 
 ```
-$ sudo cp bin/* /usr/local/bin
-$ sudo cp lib/* /usr/local/lib
+sudo cp bin/* -r /usr/local/bin
+sudo cp lib/* -r /usr/local/lib
 ```
 
 24. Register the UNICODE driver:

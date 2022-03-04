@@ -22,7 +22,7 @@ class TPCH:
         Database connection and refresh files
     '''
     DB_CONFIG = {'user': 'dbuser', 'password': 'dbuser', 'host': '127.0.0.1', 'database': 'tpch', 'allow_local_infile': True}
-    REFRESH_FILES_PATH = '/home/sclai/Downloads/2.17.3/dbgen/%d' % SCALE_FACTOR
+    REFRESH_FILES_PATH = 'tpch-kit/dbgen/%d' % SCALE_FACTOR
 
 
     '''
@@ -132,7 +132,7 @@ class TPCH:
     '''
         Query stream called from power test and throughput test (NUM_STREAMS in parallel)
     '''
-    def __run_query_stream(self, results_queue):
+    def __run_query_stream(self, results_queue, cust=False):
         # START DB CONNECTION
         conn = mysql.connector.connect(**self.DB_CONFIG)
         cursor = conn.cursor()
@@ -142,7 +142,10 @@ class TPCH:
         cursor.execute("SET PROFILING = 1")
 
         # CALL QUERY STREAM PROCEDURE
-        cursor.callproc("QUERY_STREAM")
+        if not cust:
+            cursor.callproc("QUERY_STREAM")
+        else:
+            cursor.callproc("QUERY_STREAM2")
 
         # SHOW PROFILES
         cursor.execute("SHOW PROFILES")
@@ -159,6 +162,7 @@ class TPCH:
 
         # RETURN PROFILES RESULT
         results_queue.put(profiles) # IF RUNNING IN A PROCESS
+        # time.sleep(0.1)
         return profiles
 
 

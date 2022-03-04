@@ -7,7 +7,8 @@ from agent import Agent
 import json
 from pathlib import Path
 from random import randint
-
+import faulthandler
+faulthandler.enable()
 
 class Environment:
 

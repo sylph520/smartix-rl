@@ -1,3 +1,4 @@
+import mysql.connector
 import pyodbc
 import json
 import pprint
@@ -21,7 +22,7 @@ class Database:
     
     def __init__(self):
         # Database connection
-        self.connection_string = 'DRIVER={MySQL ODBC 8.0};SERVER=127.0.0.1;DATABASE=tpch;UID=dbuser;PWD=dbuser;allow_local_infile=True'
+        self.connection_string = 'DRIVER={MySQL ODBC 8.0};SERVER=127.0.0.1;DATABASE=tpch;UID=dbuser;PWD=dbuser'
 
 
     """
@@ -106,6 +107,7 @@ class Database:
     """
     def reset_indexes(self):
         # FETCH INDEX NAMES
+        # import pdb; pdb.set_trace()
         self.conn = pyodbc.connect(self.connection_string)
         self.cur = self.conn.cursor()
 
