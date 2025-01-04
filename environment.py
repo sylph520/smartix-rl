@@ -511,8 +511,9 @@ class Environment():
 
 if __name__ == "__main__":
     from pprint import pprint
-    
-    env = Environment(hypo=True)
+
+    reward_mode = 2
+    env = Environment(hypo=True, reward_func=reward_mode)
     env.reset()
 
     print(len(env.columns))
