@@ -1,11 +1,12 @@
+import argparse
 import psycopg2
 import json
 
 
-class PG_Database():
-    def __init__(self, hypo=True, analyze=False):
+class PG_Database:
+    def __init__(self, hypo=True, analyze=False, conf_fn='./data/db_credentials_pg.json'):
         # Get credentials
-        with open('data/db_credentials_pg.json', 'r') as f:
+        with open(conf_fn, 'r') as f:
             self.credentials = json.load(f)
 
         # Connect to database
@@ -63,7 +64,7 @@ class PG_Database():
         constraints = [row[0] for row in output]
 
         # Fetch all tables and columns
-        command = "SELECT table_name, column_name FROM information_schema.columns WHERE table_schema='public' AND is_updatable='YES';"
+        command = "SELECT table_name, table_name|| '.' || column_name FROM information_schema.columns WHERE table_schema='public' AND is_updatable='YES';"
         output = self.execute_fetchall(command)
         tables = dict()
         for row in output:
@@ -78,21 +79,35 @@ class PG_Database():
 
     def get_indexes(self):
         if self.hypo:
-            command = "SELECT * FROM hypopg_list_indexes();"
-            output = self.execute_fetchall(command)
-            index_names = list(set([row[1] for row in output]))
+            # command = "SELECT * FROM hypopg_list_indexes();"
+            command1 = "SELECT indexrelid, indexname FROM hypopg();"
+            indexes_info = self.execute_fetchall(command1)
+            indexes_oid= [i[0] for i in indexes_info]
+            index_names = [i[1] for i in indexes_info]
             indexes = dict()
-            for table in self.tables.keys():
+            # for table in self.tables.keys():
+            #     for column in self.tables[table]:
+            #         if column in str(index_names):
+            #             indexes[column] = 1
+            #         else:
+            #             indexes[column] = 0
+            cols=  []
+            for oid in indexes_oid:
+                cmd2 = f"SELECT hypopg_get_indexdef({oid}) FROM hypopg_list_indexes();"
+                idx_def = self.execute_fetchall(cmd2)[0][0]
+                idx_cols = idx_def.split('(')[1].replace(')', '').split(',')
+                cols.extend(idx_cols)
+            for table in self.tables:
                 for column in self.tables[table]:
-                    if column in str(index_names):
+                    if column in cols:
                         indexes[column] = 1
                     else:
                         indexes[column] = 0
             return indexes
         else:
-            command = "SELECT t.relname AS table_name, i.relname AS index_name, a.attname AS column_name FROM pg_class t, pg_class i, pg_index ix, pg_indexes ixs, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) AND ixs.schemaname = 'public' AND i.relname = ixs.indexname ORDER BY t.relname, i.relname;"
-            output = self.execute_fetchall(command)
-            index_names = list(set([row[1] for row in output]))
+            command1 = "SELECT t.relname AS table_name, i.relname AS index_name, a.attname AS column_name FROM pg_class t, pg_class i, pg_index ix, pg_indexes ixs, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) AND ixs.schemaname = 'public' AND i.relname = ixs.indexname ORDER BY t.relname, i.relname;"
+            indexnames = self.execute_fetchall(command1)
+            index_names = list(set([row[1] for row in indexnames]))
             indexes = dict()
             for table in self.tables.keys():
                 for column in self.tables[table]:
@@ -121,7 +136,8 @@ class PG_Database():
 
     def create_index(self, table, column, verbose=False):
         if self.hypo:
-            command = "SELECT * FROM hypopg_create_index('CREATE INDEX smartix_%s ON %s (%s)');" % (column, table, column)
+            colname = column.split('.')[1]
+            command = "SELECT * FROM hypopg_create_index('CREATE INDEX smartix_%s ON %s (%s)');" % (colname, table, colname)
             self.execute(command, verbose)
         else:
             command = "CREATE INDEX smartix_%s ON %s (%s);" % (column, table, column)
@@ -178,11 +194,12 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from pprint import pprint
 
-
     #################################################
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--db_conf", type=str, default="./db_credential_pg_ceb.json")
+    args = parser.parse_args()
 
-
-    db = PG_Database(hypo=True)
+    db = PG_Database(hypo=True, conf_fn=args.db_conf)
 
     # Get workload
     with open('data/workload/tpch_shift.sql', 'r') as f:

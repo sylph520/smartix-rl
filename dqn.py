@@ -1,3 +1,4 @@
+import os
 import random
 import time
 import json
@@ -13,6 +14,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from environment import Environment
 import gym
+import argparse
 
 class ReplayMemory():
     def __init__(self, capacity):
@@ -52,7 +54,7 @@ class QNet(nn.Module):
 
 
 class Agent:
-    def __init__(self, env=Environment(), output_path=None, tag=None):
+    def __init__(self, env, output_path=None, tag=None):
         self.set_seed()
         # Hyperparameters
         self.gamma = 0.9  # 0.9
@@ -269,13 +271,15 @@ class Agent:
                 # Save model checkpoint
                 model_p = self.save_model()
                 
-                self.env.debug()
+                # self.env.debug()
             
         # Close and finish
         idx_str = f"self.env.db.get_indexes(): {self.env.db.get_indexes()}"
         print(idx_str)
-        with open('smartix_idx_rest.txt', 'w+') as wf:
+        with open('smartix_idx_res.txt', 'w+') as wf:
             wf.write(idx_str)
+        with open('smartix_idx_res.json', 'w+') as f:
+            json.dump(self.env.db.get_indexes(), f)
         self.env.close()
         return model_p
 
@@ -287,7 +291,10 @@ class Agent:
         pass
 
 if __name__ == "__main__":
-    import os
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--db_conf", type=str, default="./data/db_credentials_pg_ceb.json")
+    parser.add_argument('--wk_dir', type=str, default='./data/workload/ceb_16.sql')
+    args = parser.parse_args()
     # print("Restarting PostgreSQL...")
     # os.system('sudo systemctl restart postgresql@12-main')
     
@@ -315,7 +322,8 @@ if __name__ == "__main__":
     # agent = Agent(Environment(workload_path='data/workload/st20.sql'), tag='tpch_st_workload')
     # agent = Agent(Environment(workload_path='data/workload/tpch.sql'), tag='tpch_st_workload')
     # agent = Agent(Environment(workload_path='data/workload/cust20.sql'), tag='cust20') #cust reward
-    agent = Agent(Environment(workload_path='data/workload/cust20.sql', reward_func=2), tag='cust20') #cost as reward
+    # agent = Agent(Environment(conf_fn=args.db_conf, workload_path=args.wk_dir, reward_func=2), tag='cust20') #cost as reward
+    agent = Agent(Environment(conf_fn=args.db_conf, workload_path=args.wk_dir, reward_func=2), tag='ceb16') #cost as reward
     model_p = agent.train()
     # model_p = 'output/1642429792.1792326_0.0001_0.9_50000_10000_128_1024_0.01_0.01_tpch_st_workload'
     # model_p = 'output/1642391030.6733253_0.0001_0.9_50000_10000_128_1024_0.01_0.01_cust20'

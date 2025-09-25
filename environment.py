@@ -1,23 +1,29 @@
-from pg_database import PG_Database
+import argparse
 import numpy as np
 import time
 import random
+from pg_database import PG_Database
 
 class Environment():
-    def __init__(self, workload_path='data/workload/tpch.sql', shift=False, hypo=True, allow_columns=True, flip=True, no_op=True, window_size=80, reward_func=1):
+    def __init__(self, workload_path='data/workload/tpch.sql', shift=False, hypo=True,
+            allow_columns=True, flip=True, no_op=True, window_size=80, reward_func=1,
+            conf_fn="./data/db_credential_pg.json"):
         """
         flip: whether flip the index slot as the action
         """
         # DBMS
-        self.db = PG_Database(hypo=hypo)
+        self.db = PG_Database(hypo=hypo, conf_fn=conf_fn)
 
         # Database
         self.table_columns = self.db.tables
         self.tables = list(self.table_columns.keys())
-        self.columns = list(set(np.concatenate(list(self.table_columns.values())).tolist()))
+        # self.columns = list(set(np.concatenate(list(self.table_columns.values())).tolist()))
+        self.columns = [c for t in self.table_columns for c in self.table_columns[t]]
 
         # Workload
         self.workload = self.load_workload(workload_path)
+        if self.workload[-1] == '':
+            self.workload.pop()
         self.workload_iterator = 0
         self.window_size = window_size
 
@@ -511,9 +517,11 @@ class Environment():
 
 if __name__ == "__main__":
     from pprint import pprint
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--db_conf", type=str, default="data/db_credential_pg_ceb.json")
+    args = parser.parse_args()
     reward_mode = 2
-    env = Environment(hypo=True, reward_func=reward_mode)
+    env = Environment(hypo=True, reward_func=reward_mode, conf_fn=args.db_conf)
     env.reset()
 
     print(len(env.columns))
