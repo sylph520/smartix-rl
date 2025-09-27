@@ -91,7 +91,7 @@ class Environment():
     
     def close(self):
         self.db.reset_indexes()
-        return self.db.close_connection()
+        # return self.db.close_connection()
 
     def debug(self):
         indexes_dict = self.db.get_indexes()

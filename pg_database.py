@@ -77,7 +77,7 @@ class PG_Database:
         # Return dict with valid columns for indexing
         return tables
 
-    def get_indexes(self):
+    def get_indexes(self, print_idx_col: bool=False):
         if self.hypo:
             # command = "SELECT * FROM hypopg_list_indexes();"
             command1 = "SELECT indexrelid, indexname FROM hypopg();"
@@ -95,12 +95,14 @@ class PG_Database:
             for oid in indexes_oid:
                 cmd2 = f"SELECT hypopg_get_indexdef({oid}) FROM hypopg_list_indexes();"
                 idx_def = self.execute_fetchall(cmd2)[0][0]
-                idx_cols = idx_def.split('(')[1].replace(')', '').split(',')
+                idx_cols = [idx_def.split('.')[1].split(' ')[0] + '.' + i  for i in idx_def.split('(')[1].replace(')', '').split(',')]
                 cols.extend(idx_cols)
             for table in self.tables:
                 for column in self.tables[table]:
                     if column in cols:
                         indexes[column] = 1
+                        if print_idx_col:
+                            print(column)
                     else:
                         indexes[column] = 0
             return indexes

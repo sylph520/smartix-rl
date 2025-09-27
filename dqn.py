@@ -54,7 +54,7 @@ class QNet(nn.Module):
 
 
 class Agent:
-    def __init__(self, env, output_path=None, tag=None):
+    def __init__(self, env: Environment, output_path=None, tag=None):
         self.set_seed()
         # Hyperparameters
         self.gamma = 0.9  # 0.9
@@ -62,6 +62,7 @@ class Agent:
 
         # Training
         self.n_steps = 50000  # 50k
+        self.n_steps = 130 # 30 * 100
         self.memory_size = 10000  # 10k
         self.memory = ReplayMemory(self.memory_size)
         self.target_update_interval = 128  # 128
@@ -92,7 +93,7 @@ class Agent:
         self.output_path = path + '/'
         self.tag = tag
         # Environment
-        self.env = env
+        self.env  = env
         self.n_features = self.env.n_features
         self.n_actions = self.env.n_actions
         # self.env = gym.make('CartPole-v0')
@@ -113,7 +114,8 @@ class Agent:
         Model
     """
     def load_model(self, path):
-        self.qnet.load_state_dict(torch.load(path+'/model.pkl'))
+        # self.qnet.load_state_dict(torch.load(path+'/model.pkl'))
+        self.qnet.load_state_dict(torch.load(path))
 
     def save_model(self):
         model_p = self.output_path+'model.pkl'
@@ -287,8 +289,18 @@ class Agent:
         # load the saved model
         self.load_model(model_path)
         env = self.env
-        obs = env.reset()
-        pass
+        state = env.reset()
+        actions = []
+        for step in range(3):
+            action = self.choose_action(state)
+            next_state, reward, done, _ = self.env.step(action)
+            self.memory.add(state, action, reward, next_state, done)
+
+            state = next_state
+            actions.append(action)
+        print(actions)
+        print(self.env.db.get_indexes(print_idx_col=True))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -324,8 +336,9 @@ if __name__ == "__main__":
     # agent = Agent(Environment(workload_path='data/workload/cust20.sql'), tag='cust20') #cust reward
     # agent = Agent(Environment(conf_fn=args.db_conf, workload_path=args.wk_dir, reward_func=2), tag='cust20') #cost as reward
     agent = Agent(Environment(conf_fn=args.db_conf, workload_path=args.wk_dir, reward_func=2), tag='ceb16') #cost as reward
-    model_p = agent.train()
+    # model_p = agent.train()
     # model_p = 'output/1642429792.1792326_0.0001_0.9_50000_10000_128_1024_0.01_0.01_tpch_st_workload'
     # model_p = 'output/1642391030.6733253_0.0001_0.9_50000_10000_128_1024_0.01_0.01_cust20'
-    # agent.test(model_p)
+    model_p = 'output/1758961915.039519_0.0001_0.9_130_10000_128_1024_0.01_0.01_ceb16/model.pkl'
+    agent.test(model_p)
     print("Done")
