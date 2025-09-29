@@ -1,6 +1,7 @@
 import argparse
 import psycopg2
 import json
+from typing import List
 
 
 class PG_Database:
@@ -138,7 +139,10 @@ class PG_Database:
 
     def create_index(self, table, column, verbose=False):
         if self.hypo:
-            colname = column.split('.')[1]
+            if '.' in column:
+                colname = column.split('.')[1]
+            else:
+                colname = column
             command = "SELECT * FROM hypopg_create_index('CREATE INDEX smartix_%s ON %s (%s)');" % (colname, table, colname)
             self.execute(command, verbose)
         else:
@@ -191,6 +195,12 @@ class PG_Database:
         except psycopg2.DatabaseError as err:
             print('ERROR: {}'.format(err))
 
+    def get_workload_cost(self, workload: List[str]):
+        wcost = 0
+        for q in workload:
+            qcost = self.get_query_cost(q)
+            wcost += qcost
+        return wcost
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt

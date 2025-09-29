@@ -62,7 +62,7 @@ class Agent:
 
         # Training
         self.n_steps = 50000  # 50k
-        self.n_steps = 130 # 30 * 100
+        # self.n_steps = 3000 # 30 * 100
         self.memory_size = 10000  # 10k
         self.memory = ReplayMemory(self.memory_size)
         self.target_update_interval = 128  # 128
@@ -277,29 +277,30 @@ class Agent:
             
         # Close and finish
         idx_str = f"self.env.db.get_indexes(): {self.env.db.get_indexes()}"
-        print(idx_str)
-        with open('smartix_idx_res.txt', 'w+') as wf:
+        # print(idx_str)
+        with open('smartix_idx_res_print.txt', 'w+') as wf:
             wf.write(idx_str)
         with open('smartix_idx_res.json', 'w+') as f:
             json.dump(self.env.db.get_indexes(), f)
         self.env.close()
         return model_p
 
-    def test(self, model_path=''):
+    def test(self, model_path='', rec_num=3):
         # load the saved model
         self.load_model(model_path)
         env = self.env
         state = env.reset()
         actions = []
-        for step in range(3):
+        for step in range(rec_num):
             action = self.choose_action(state)
             next_state, reward, done, _ = self.env.step(action)
             self.memory.add(state, action, reward, next_state, done)
 
             state = next_state
             actions.append(action)
-        print(actions)
-        print(self.env.db.get_indexes(print_idx_col=True))
+        print(set(actions))
+        idxes = self.env.db.get_indexes(print_idx_col=True)
+        # print(idxes)
 
 
 if __name__ == "__main__":
@@ -339,6 +340,8 @@ if __name__ == "__main__":
     # model_p = agent.train()
     # model_p = 'output/1642429792.1792326_0.0001_0.9_50000_10000_128_1024_0.01_0.01_tpch_st_workload'
     # model_p = 'output/1642391030.6733253_0.0001_0.9_50000_10000_128_1024_0.01_0.01_cust20'
-    model_p = 'output/1758961915.039519_0.0001_0.9_130_10000_128_1024_0.01_0.01_ceb16/model.pkl'
-    agent.test(model_p)
+    # model_p = 'output/1758961915.039519_0.0001_0.9_130_10000_128_1024_0.01_0.01_ceb16/model.pkl'
+    model_p = 'output/1758987066.4732132_0.0001_0.9_50000_10000_128_1024_0.01_0.01_ceb16/model.pkl'
+    rec_num = 3
+    agent.test(model_p, rec_num=rec_num)
     print("Done")
