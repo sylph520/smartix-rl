@@ -1,16 +1,16 @@
-from database import Database
+# from database import Database
+from pg_database import PG_Database
 import pprint
 
 class State:
 
 
-    def __init__(self):
+    def __init__(self, db: PG_Database=None):
         # Database instance
-        self.db = Database()
+        self.db = db
 
         # State attributes
         self.indexes_map = self.db.get_indexes_map()
-
 
     def __repr__(self):
         return str(self.indexes_map)

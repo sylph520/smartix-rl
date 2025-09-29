@@ -1,4 +1,4 @@
-from database import Database
+from pg_database import PG_Database
 
 
 class Action:
@@ -6,7 +6,7 @@ class Action:
 
     def __init__(self, table, column, type):
         # Database instance
-        self.db = Database()
+        # self.db = PG_Database()
 
         # Action attributes
         self.table = table
@@ -26,11 +26,11 @@ class Action:
         return str(self) == str(other)
 
 
-    def execute(self):
+    def execute(self, db):
         if self.type == 'DROP':
-            self.db.drop_index(self.column, self.table)
+            db.drop_index(self.table, self.column)
         elif self.type == 'CREATE':
-            self.db.create_index(self.column, self.table)
+            db.create_index(self.table, self.column)
         else:
             print("PASS action!")
 

@@ -1,6 +1,6 @@
-from database import Database
-from state import State
-from action import Action
+# from database import Database
+# from state import State
+# from action import Action
 
 import random, pprint, copy, math, time
 
@@ -191,7 +191,7 @@ class Agent:
             for step in range(self.MAX_STEPS_PER_EPISODE):
 
                 # Log step
-                print("step =", step)
+                print(">>>>>>>>step =", step)
                 # print("\n\nEpisode {}/{} @ Step {}".format(episode, self.MAX_TRAINING_EPISODES, step))
 
                 # Get action

@@ -1,4 +1,5 @@
-from database import Database
+# from database import Database
+from pg_database import PG_Database
 from benchmark import Benchmark
 from state import State
 from action import Action
@@ -14,10 +15,11 @@ class Environment:
 
     def __init__(self):
         # Database instance
-        self.db = Database()
+        self.db = PG_Database()
 
         # Benchmark
         self.benchmark = Benchmark('TPCH')
+        self.cost_ori = self.benchmark.run(self.db)
 
         # Current rewards dictionary
         self.rewards = dict()
@@ -31,8 +33,8 @@ class Environment:
 
 
     def step(self, action):
-        action.execute()
-        state = State()
+        action.execute(self.db)
+        state = State(self.db)
         reward = self.get_reward(state)
         return state, reward
 
@@ -58,7 +60,7 @@ class Environment:
             self.rewards[state] = self.rewards_archive[repr(state)]
         else:
             # print("State-reward not in dictionary")
-            self.rewards[state] = self.benchmark.run()
+            self.rewards[state] = 1.0 * (self.cost_ori - self.benchmark.run(self.db)) / self.cost_ori
 
         # Save reward to archive
         self.rewards_archive[repr(state)] = self.rewards[state]
@@ -94,7 +96,7 @@ class Environment:
 
     def reset(self):
         self.db.reset_indexes()
-        return State()
+        return State(self.db)
 
 
     '''
