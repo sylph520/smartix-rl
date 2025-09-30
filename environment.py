@@ -8,17 +8,19 @@ from agent import Agent
 import json
 from pathlib import Path
 from random import randint
+import time
+import argparse
 
 
 class Environment:
 
 
-    def __init__(self):
+    def __init__(self, db_conf, benchmark='TPCH'):
         # Database instance
-        self.db = PG_Database()
+        self.db = PG_Database(conf_fn=db_conf, benchmark=benchmark)
 
         # Benchmark
-        self.benchmark = Benchmark('TPCH')
+        self.benchmark = Benchmark(benchmark)
         self.cost_ori = self.benchmark.run(self.db)
 
         # Current rewards dictionary
@@ -150,5 +152,22 @@ class Environment:
 
 if __name__ == "__main__":
     agent = Agent()
-    env = Environment()
-    agent.train(env)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--benchmark', type=str, default='TPCH')
+    parser.add_argument('--db_conf', type=str, default='./data/db_credentials_pg.json')
+    parser.add_argument('--train', type=int, default=0)
+    parser.add_argument('--model_path', type=str, default='./TPCH_model_weights.pkl')
+    parser.add_argument('--test_episodes', type=int, default=5)
+    parser.add_argument('--test_num_steps', type=int, default=100)
+    args = parser.parse_args()
+    env = Environment(db_conf=args.db_conf, benchmark=args.benchmark)
+    if args.train:
+        train_start_time = time.time()
+        agent.train(env)
+        train_end_time = time.time()
+        print(f"training time: {train_end_time - train_start_time}")
+    else:
+        test_start_time = time.time()
+        agent.test(env, num_steps=args.test_num_steps, num_episodes=args.test_episodes)
+        test_end_time = time.time()
+        print(f"test time: {(test_end_time - test_start_time)/args.test_episodes}")

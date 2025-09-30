@@ -3,11 +3,12 @@
 # from action import Action
 
 import random, pprint, copy, math, time
+import pickle
 
 class Agent:
 
 
-    MAX_TRAINING_EPISODES = 50
+    MAX_TRAINING_EPISODES = 30
     MAX_STEPS_PER_EPISODE = 100
 
 
@@ -22,7 +23,7 @@ class Agent:
         self.next_state = None
         self.reward = 0.0
         self.action = None
-        
+
         self.alpha = 0.01 # Learning rate
         self.gamma = 0.8 # Discount factor
         self.epsilon = 0.9 # Exploration probability
@@ -34,7 +35,7 @@ class Agent:
         self.frozen_feature_weights = dict()
 
         self.replay_memory = list()
-    
+
 
     def argmax_a(self, state):
         a = None
@@ -63,9 +64,9 @@ class Agent:
 
         if max_value == float('-inf'): 
             max_value = 0.0
-        
+
         return max_value
-    
+
 
     def max_a_replay(self, state):
         max_value = float('-inf')
@@ -79,9 +80,9 @@ class Agent:
 
         if max_value == float('-inf'): 
             max_value = 0.0
-        
+
         return max_value
-    
+
 
     def predict_replay(self, state):
         state_features = self.env.get_state_features(state)
@@ -151,7 +152,7 @@ class Agent:
         for weight in self.feature_weights.keys():
             feature = state_features[weight]
             self.feature_weights[weight] += self.alpha * (td_target - q_value) * feature
-    
+
 
     def experience_replay(self):
         samples = [random.choice(self.replay_memory) for _ in range(32)]
@@ -164,6 +165,23 @@ class Agent:
             # Perform gradient descent
             self.update(sample[0], sample[1], td_target, q_value)
 
+
+    def save_weights(self, weight_path: str=''):
+        model_weight_dict = {
+            'action_weights': self.action_weights,
+            'feature_weights': self.feature_weights,
+        }
+        if not weight_path:
+            weight_path = f'{self.env.benchmark.benchmark}_model_weights.pkl'
+        with open(weight_path, 'wb') as f:
+            pickle.dump(model_weight_dict, f)
+
+    def load_weigths(self, weight_path: str=''):
+        if not weight_path:
+            weight_path = f'{self.env.benchmark.benchmark}_model_weights.pkl'
+        with open(weight_path, 'rb') as f:
+            model_weight_dict = pickle.load(f)
+        return model_weight_dict
 
     def train(self, env):
         # Reset environment
@@ -178,7 +196,7 @@ class Agent:
 
         # Episodes loop
         for episode in range(self.MAX_TRAINING_EPISODES):
-
+            print(f">>>>>episode {episode}")
             # Update statistics
             self.episode_reward[episode] = 0.0
             self.episode_mse[episode] = 0.0
@@ -191,7 +209,7 @@ class Agent:
             for step in range(self.MAX_STEPS_PER_EPISODE):
 
                 # Log step
-                print(">>>>>>>>step =", step)
+                print(">>step =", step)
                 # print("\n\nEpisode {}/{} @ Step {}".format(episode, self.MAX_TRAINING_EPISODES, step))
 
                 # Get action
@@ -277,3 +295,29 @@ class Agent:
                     self.next_state = None
                     self.action = None
                     self.reward = None
+        print("training end")
+        self.save_weights()
+
+    def test(self, env, weight_path: str='',num_episodes=5,  num_steps=0):
+        self.env = env
+        model_weight_dict = self.load_weigths(weight_path)
+        self.action_weights = model_weight_dict['action_weights']
+        self.feature_weights = model_weight_dict['feature_weights']
+
+        pprint.pprint(self.action_weights)
+        pprint.pprint(self.feature_weights)
+        if not num_steps:
+            num_steps = self.MAX_STEPS_PER_EPISODE
+
+        episode_rewards = []
+        for i in range(num_episodes):
+            self.state = self.env.reset()
+            for step in range(num_steps):
+                print(f"episode {i} >> step {step}")
+                self.action = self.get_action_epsilon_greedy(self.state)
+                print("action =", repr(self.action))
+                self.next_state, self.reward = self.env.step(self.action)
+                # Log reward and next state
+                print("reward =", self.reward)
+            episode_rewards.append(self.reward)
+

@@ -5,10 +5,15 @@ from typing import List
 
 
 class PG_Database:
-    def __init__(self, hypo=True, analyze=False, conf_fn='./data/db_credentials_pg.json'):
+    def __init__(self, hypo=True, analyze=False, conf_fn='./data/db_credentials_pg.json', benchmark='TPCH'):
         # Get credentials
         with open(conf_fn, 'r') as f:
             self.credentials = json.load(f)
+
+        if benchmark.upper() == 'CEB':
+            self.credentials['database'] = 'indexselection_job___1'
+        elif benchmark.upper() == 'TPCDS':
+            self.credentials['database'] = 'indexselection_tpcds___10'
 
         # Connect to database
         try:
