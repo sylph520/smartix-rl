@@ -320,4 +320,5 @@ class Agent:
                 # Log reward and next state
                 print("reward =", self.reward)
             episode_rewards.append(self.reward)
-
+        print(f"max epsiode reward is {max(episode_rewards)}")
+        print(f"avg epsiode reward is {sum(episode_rewards)/len(episode_rewards)}")
