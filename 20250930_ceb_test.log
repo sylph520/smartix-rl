@@ -1,0 +1,828 @@
+{movie_keyword,movie_keyword.keyword_id,DROP: 0.14317205060764104,
+ name,name.id,CREATE: 1.109513696087716,
+ movie_link,movie_link.link_type_id,CREATE: 0.5784540043138643,
+ movie_link,movie_link.link_type_id,DROP: 0.5646498879505408,
+ movie_link,movie_link.linked_movie_id,CREATE: 0.7736560162398466,
+ movie_link,movie_link.linked_movie_id,DROP: 0.4230349405424172,
+ movie_link,movie_link.movie_id,CREATE: 0.43759845378912116,
+ movie_link,movie_link.movie_id,DROP: 0.5734727453434727,
+ movie_link,movie_link.id,CREATE: 0.5089832410050615,
+ movie_link,movie_link.id,DROP: 0.59934366521314,
+ aka_name,aka_name.person_id,CREATE: 0.5908705453401726,
+ aka_name,aka_name.name,DROP: 0.5260266650625023,
+ aka_name,aka_name.id,CREATE: 0.5912492185180365,
+ aka_name,aka_name.name,CREATE: 0.5755704407349383,
+ aka_name,aka_name.person_id,DROP: 0.5702563072905794,
+ aka_name,aka_name.id,DROP: 0.5009429309286259,
+ aka_name,aka_name.imdb_index,CREATE: 0.5963521041661493,
+ aka_name,aka_name.imdb_index,DROP: 0.5776376627731531,
+ aka_name,aka_name.name_pcode_cf,CREATE: 0.5864983255459172,
+ aka_name,aka_name.name_pcode_cf,DROP: 0.5779698186079725,
+ aka_name,aka_name.name_pcode_nf,CREATE: 0.3773647577249007,
+ aka_name,aka_name.name_pcode_nf,DROP: 0.07505551451956904,
+ aka_name,aka_name.surname_pcode,CREATE: 0.5867569708849968,
+ aka_name,aka_name.surname_pcode,DROP: 0.37620861680172263,
+ aka_name,aka_name.md5sum,CREATE: 0.5817892870850722,
+ aka_name,aka_name.md5sum,DROP: 0.5664624429379863,
+ aka_title,aka_title.id,CREATE: 0.5750019529677093,
+ aka_title,aka_title.id,DROP: 0.5781218528286588,
+ aka_title,aka_title.movie_id,CREATE: 0.5886781342262762,
+ aka_title,aka_title.movie_id,DROP: 0.532935391663743,
+ aka_title,aka_title.title,CREATE: 0.5785316109806464,
+ aka_title,aka_title.title,DROP: 0.5776824830513156,
+ aka_title,aka_title.imdb_index,CREATE: 0.5069880102640735,
+ aka_title,aka_title.imdb_index,DROP: 0.5392961760971909,
+ aka_title,aka_title.kind_id,CREATE: 0.5843385702566165,
+ aka_title,aka_title.kind_id,DROP: 0.5764586000738721,
+ aka_title,aka_title.production_year,CREATE: 0.5776977632966256,
+ aka_title,aka_title.production_year,DROP: 0.5616641999632427,
+ aka_title,aka_title.phonetic_code,CREATE: 0.5429010586255599,
+ aka_title,aka_title.phonetic_code,DROP: 0.19925814479096837,
+ aka_title,aka_title.episode_of_id,CREATE: 0.5762836491706762,
+ aka_title,aka_title.episode_of_id,DROP: 0.4534863554320939,
+ aka_title,aka_title.season_nr,CREATE: 0.6060224774049373,
+ aka_title,aka_title.season_nr,DROP: 0.39099161261238863,
+ aka_title,aka_title.episode_nr,CREATE: 0.5289882026066042,
+ aka_title,aka_title.episode_nr,DROP: 0.5982782993417007,
+ aka_title,aka_title.note,CREATE: 0.5854865550842714,
+ aka_title,aka_title.note,DROP: 0.5773506068685447,
+ aka_title,aka_title.md5sum,CREATE: 0.41766240671216,
+ aka_title,aka_title.md5sum,DROP: 0.21013723466883816,
+ cast_info,cast_info.id,CREATE: 0.6238131553138746,
+ cast_info,cast_info.id,DROP: 0.3818548137011275,
+ cast_info,cast_info.person_id,CREATE: 1.042901670785999,
+ cast_info,cast_info.person_id,DROP: 0.5774869420623332,
+ cast_info,cast_info.movie_id,CREATE: 0.864885525645402,
+ cast_info,cast_info.movie_id,DROP: 0.544781307405435,
+ cast_info,cast_info.person_role_id,CREATE: 0.5544831394682349,
+ cast_info,cast_info.person_role_id,DROP: 0.2607562532602098,
+ cast_info,cast_info.note,CREATE: 0.5236923708555854,
+ cast_info,cast_info.note,DROP: 0.44710060248876127,
+ cast_info,cast_info.nr_order,CREATE: 0.5783726927713458,
+ cast_info,cast_info.nr_order,DROP: 0.5778024300017482,
+ cast_info,cast_info.role_id,CREATE: 0.5829104868021489,
+ cast_info,cast_info.role_id,DROP: 0.5210936971243117,
+ char_name,char_name.id,CREATE: 0.6703010946032562,
+ char_name,char_name.id,DROP: 0.5607433172930508,
+ char_name,char_name.name,CREATE: 0.6141461508356346,
+ char_name,char_name.name,DROP: 0.4760407864087378,
+ char_name,char_name.imdb_index,CREATE: 0.5776672039388182,
+ char_name,char_name.imdb_index,DROP: 0.5757943495224102,
+ char_name,char_name.imdb_id,CREATE: 0.6169526874909987,
+ char_name,char_name.imdb_id,DROP: 0.56698731216316,
+ char_name,char_name.name_pcode_nf,CREATE: 0.5178315504448275,
+ char_name,char_name.name_pcode_nf,DROP: 0.04941562098625307,
+ char_name,char_name.surname_pcode,CREATE: 0.5806205654238988,
+ char_name,char_name.surname_pcode,DROP: 0.49868530104673203,
+ char_name,char_name.md5sum,CREATE: 0.5762919874717489,
+ char_name,char_name.md5sum,DROP: 0.5655903248466082,
+ comp_cast_type,comp_cast_type.id,CREATE: 0.5725682328736893,
+ comp_cast_type,comp_cast_type.id,DROP: 0.20216235945220962,
+ comp_cast_type,comp_cast_type.kind,CREATE: 0.6651716788212911,
+ comp_cast_type,comp_cast_type.kind,DROP: 0.36386652076866954,
+ company_name,company_name.id,CREATE: 0.5497554803642521,
+ company_name,company_name.id,DROP: 0.27920058129294,
+ company_name,company_name.name,CREATE: 0.6321188465952501,
+ company_name,company_name.name,DROP: 0.5504478945796605,
+ company_name,company_name.country_code,CREATE: 0.5821484409068916,
+ company_name,company_name.country_code,DROP: 0.5631661877488948,
+ company_name,company_name.imdb_id,CREATE: 0.5857580345793207,
+ company_name,company_name.imdb_id,DROP: 0.5543902370060517,
+ company_name,company_name.name_pcode_nf,CREATE: 0.5764639251053488,
+ company_name,company_name.name_pcode_nf,DROP: 0.57796781261498,
+ company_name,company_name.name_pcode_sf,CREATE: 0.577320771609392,
+ company_name,company_name.name_pcode_sf,DROP: 0.493663451053207,
+ company_name,company_name.md5sum,CREATE: 0.5910741961376648,
+ company_name,company_name.md5sum,DROP: 0.5312784717407426,
+ company_type,company_type.id,CREATE: 0.5562260487295038,
+ company_type,company_type.id,DROP: 0.4866746667532414,
+ company_type,company_type.kind,CREATE: 0.5721960113024579,
+ company_type,company_type.kind,DROP: 0.545745991139372,
+ complete_cast,complete_cast.id,CREATE: 0.5751921928126438,
+ complete_cast,complete_cast.id,DROP: 0.44300973813180766,
+ complete_cast,complete_cast.movie_id,CREATE: 0.699061811169906,
+ complete_cast,complete_cast.movie_id,DROP: 0.5746438511284199,
+ complete_cast,complete_cast.subject_id,CREATE: 0.5678251770188298,
+ complete_cast,complete_cast.subject_id,DROP: 0.5930844136326967,
+ complete_cast,complete_cast.status_id,CREATE: 0.5770777094133402,
+ complete_cast,complete_cast.status_id,DROP: 0.31974833079559817,
+ info_type,info_type.id,CREATE: 0.5676148392888033,
+ info_type,info_type.id,DROP: 0.5748233598397045,
+ info_type,info_type.info,CREATE: 0.46206588489142486,
+ info_type,info_type.info,DROP: 0.051201866134389595,
+ keyword,keyword.id,CREATE: 0.5281825622571837,
+ keyword,keyword.id,DROP: 0.4022990693512283,
+ keyword,keyword.keyword,CREATE: 0.5828631385046379,
+ keyword,keyword.keyword,DROP: 0.30462044751664263,
+ keyword,keyword.phonetic_code,CREATE: 0.575117488682283,
+ keyword,keyword.phonetic_code,DROP: 0.581779322642115,
+ kind_type,kind_type.id,CREATE: 0.48012214702527506,
+ kind_type,kind_type.id,DROP: 0.19257813813572888,
+ kind_type,kind_type.kind,CREATE: 0.5817455468594059,
+ kind_type,kind_type.kind,DROP: 0.5774202235111497,
+ link_type,link_type.id,CREATE: 0.57893580926283,
+ link_type,link_type.id,DROP: 0.25051792223278097,
+ link_type,link_type.link,CREATE: 0.5795750004395064,
+ link_type,link_type.link,DROP: 0.5332067732733023,
+ movie_companies,movie_companies.id,CREATE: 0.5773470209991404,
+ movie_companies,movie_companies.id,DROP: 0.5773990799527295,
+ movie_companies,movie_companies.movie_id,CREATE: 0.5790539198311666,
+ movie_companies,movie_companies.movie_id,DROP: 0.3818675067438265,
+ movie_companies,movie_companies.company_id,CREATE: 0.5253640851429902,
+ movie_companies,movie_companies.company_id,DROP: 0.5826070031176437,
+ movie_companies,movie_companies.company_type_id,CREATE: 0.5666060598042553,
+ movie_companies,movie_companies.company_type_id,DROP: 0.44689958784413353,
+ movie_companies,movie_companies.note,CREATE: 0.5304753951211052,
+ movie_companies,movie_companies.note,DROP: 0.546729054740707,
+ movie_info,movie_info.id,CREATE: 0.5783725747034294,
+ movie_info,movie_info.id,DROP: 0.07622165113818546,
+ movie_info,movie_info.movie_id,CREATE: 1.0256942535106126,
+ movie_info,movie_info.movie_id,DROP: 0.422951255664439,
+ movie_info,movie_info.info_type_id,CREATE: 0.5794306570570635,
+ movie_info,movie_info.info_type_id,DROP: 0.4032905601920825,
+ movie_info,movie_info.info,CREATE: 0.6544582359226117,
+ movie_info,movie_info.info,DROP: 0.5693441338343371,
+ movie_info,movie_info.note,CREATE: 0.5794509581826413,
+ movie_info,movie_info.note,DROP: 0.48238146277021027,
+ movie_info_idx,movie_info_idx.id,CREATE: 0.5780764989041557,
+ movie_info_idx,movie_info_idx.id,DROP: 0.5554773938264039,
+ movie_info_idx,movie_info_idx.movie_id,CREATE: 0.590842615695281,
+ movie_info_idx,movie_info_idx.movie_id,DROP: 0.5772056721200213,
+ movie_info_idx,movie_info_idx.info_type_id,CREATE: 0.5365744067614974,
+ movie_info_idx,movie_info_idx.info_type_id,DROP: 0.4300098973487454,
+ movie_info_idx,movie_info_idx.info,CREATE: 0.564712019905366,
+ movie_info_idx,movie_info_idx.info,DROP: 0.5747724606273327,
+ movie_info_idx,movie_info_idx.note,CREATE: 0.440665653978763,
+ movie_info_idx,movie_info_idx.note,DROP: 0.1533425500074358,
+ movie_keyword,movie_keyword.id,CREATE: 0.5753756009396884,
+ movie_keyword,movie_keyword.id,DROP: 0.585893660189917,
+ movie_keyword,movie_keyword.movie_id,CREATE: 0.5869030150380061,
+ movie_keyword,movie_keyword.movie_id,DROP: 0.5771238975818963,
+ movie_keyword,movie_keyword.keyword_id,CREATE: 0.5783222730356703,
+ name,name.name,DROP: 0.5545749171318383,
+ name,name.imdb_index,CREATE: 0.4909653896129908,
+ name,name.imdb_index,DROP: 0.5718635655056337,
+ name,name.imdb_id,CREATE: 0.5510468786289199,
+ name,name.imdb_id,DROP: 0.574401563308325,
+ name,name.gender,CREATE: 0.5795953499339943,
+ name,name.gender,DROP: 0.576783617055044,
+ name,name.name_pcode_cf,CREATE: 0.4140031993629237,
+ name,name.name_pcode_cf,DROP: 0.4626078350126924,
+ name,name.name_pcode_nf,CREATE: 0.5807438678381435,
+ name,name.name_pcode_nf,DROP: 0.5631447755376574,
+ name,name.surname_pcode,CREATE: 0.561934147240373,
+ name,name.surname_pcode,DROP: 0.5461660109925344,
+ name,name.md5sum,CREATE: 0.5778774878800238,
+ name,name.md5sum,DROP: 0.575327813082618,
+ person_info,person_info.id,CREATE: 0.5779814347597504,
+ person_info,person_info.id,DROP: 0.5502603872816083,
+ person_info,person_info.person_id,CREATE: 0.4039260202986915,
+ person_info,person_info.person_id,DROP: 0.9998488537016558,
+ person_info,person_info.info_type_id,CREATE: 0.6328326067116764,
+ person_info,person_info.info_type_id,DROP: 0.5640613040278409,
+ person_info,person_info.info,CREATE: 0.5749983267300307,
+ person_info,person_info.info,DROP: 0.14291966089637165,
+ person_info,person_info.note,CREATE: 0.5892009141885496,
+ person_info,person_info.note,DROP: 0.5660261582210099,
+ role_type,role_type.id,CREATE: 0.5780144384579625,
+ role_type,role_type.id,DROP: 0.5504884120635799,
+ role_type,role_type.role,CREATE: 0.588648323190802,
+ role_type,role_type.role,DROP: 0.3965558629137085,
+ title,title.id,CREATE: 0.6064591993285091,
+ title,title.id,DROP: 0.4893476406575615,
+ title,title.title,CREATE: 0.5129021710640236,
+ title,title.title,DROP: 0.33501749879194603,
+ title,title.imdb_index,CREATE: 0.5943508436351201,
+ title,title.imdb_index,DROP: 0.5762677298651261,
+ title,title.kind_id,CREATE: 0.5796008191014472,
+ title,title.kind_id,DROP: 0.32874620914127617,
+ title,title.production_year,CREATE: 0.580364981073093,
+ title,title.production_year,DROP: 0.5768483608560437,
+ title,title.imdb_id,CREATE: 0.49866438092182197,
+ title,title.imdb_id,DROP: 0.4508906440609073,
+ title,title.phonetic_code,CREATE: 0.526894323385395,
+ title,title.phonetic_code,DROP: 0.6002279091917228,
+ title,title.episode_of_id,CREATE: 0.5778397252646186,
+ title,title.episode_of_id,DROP: 0.5487858396185069,
+ title,title.season_nr,CREATE: 0.5228691028385006,
+ title,title.season_nr,DROP: 0.645451106724186,
+ title,title.episode_nr,CREATE: 0.5719469892891582,
+ title,title.episode_nr,DROP: 0.12164930200958379,
+ title,title.series_years,CREATE: 0.4390046320958609,
+ title,title.series_years,DROP: 0.5887668571766074,
+ title,title.md5sum,CREATE: 0.43096350085731283,
+ title,title.md5sum,DROP: 0.11030524077988968,
+ name,name.name,CREATE: 0.583742859873971,
+ name,name.id,DROP: 0.5103801204087319}
+{'Bias': 1.3064345338874128,
+ 'aka_name.id': -0.007873512857187624,
+ 'aka_name.imdb_index': 0.008667487605547258,
+ 'aka_name.md5sum': 0.007092330462366197,
+ 'aka_name.name': 0.022563432806975627,
+ 'aka_name.name_pcode_cf': -0.0024588149850107515,
+ 'aka_name.name_pcode_nf': -0.1190206919989395,
+ 'aka_name.person_id': -0.028114131231071104,
+ 'aka_name.surname_pcode': 0.021935968960025164,
+ 'aka_title.episode_nr': 0.06126947368328812,
+ 'aka_title.episode_of_id': 0.001272790935291736,
+ 'aka_title.id': 0.030321217849192988,
+ 'aka_title.imdb_index': -0.13814240605870617,
+ 'aka_title.kind_id': 0.0028768088419971484,
+ 'aka_title.md5sum': 0.03364559387357642,
+ 'aka_title.movie_id': 0.03409799733850957,
+ 'aka_title.note': -0.02228564479371442,
+ 'aka_title.phonetic_code': 0.131243798114569,
+ 'aka_title.production_year': 0.002865800438708027,
+ 'aka_title.season_nr': 0.021118939145764872,
+ 'aka_title.title': -0.051842834290847926,
+ 'cast_info.id': 0.034354833738132,
+ 'cast_info.movie_id': 0.15069865559840467,
+ 'cast_info.note': -0.03977847528095701,
+ 'cast_info.nr_order': -0.00442659059500171,
+ 'cast_info.person_id': 0.46004024566232254,
+ 'cast_info.person_role_id': -0.024696847151767263,
+ 'cast_info.role_id': -0.032558658220393964,
+ 'char_name.id': 0.12388836706545396,
+ 'char_name.imdb_id': 0.04446903820546867,
+ 'char_name.imdb_index': 0.023146006296226665,
+ 'char_name.md5sum': -0.011614486489108065,
+ 'char_name.name': 0.028645939541430066,
+ 'char_name.name_pcode_nf': 0.07365392153485312,
+ 'char_name.surname_pcode': 0.01366018417093378,
+ 'comp_cast_type.id': -0.055072451098392664,
+ 'comp_cast_type.kind': 0.09422631199075363,
+ 'company_name.country_code': 0.017362878317871443,
+ 'company_name.id': 0.0027869927578712235,
+ 'company_name.imdb_id': 0.019100124970066155,
+ 'company_name.md5sum': -0.005779594234825405,
+ 'company_name.name': 0.046445215114896916,
+ 'company_name.name_pcode_nf': 0.000888187334090415,
+ 'company_name.name_pcode_sf': -0.0034883667174956863,
+ 'company_type.id': -0.004741392279447137,
+ 'company_type.kind': 0.0011111082871351709,
+ 'complete_cast.id': 0.027097147527712816,
+ 'complete_cast.movie_id': 0.09408318835514128,
+ 'complete_cast.status_id': 0.003944840883214585,
+ 'complete_cast.subject_id': 0.02265298751031506,
+ 'info_type.id': 0.16514916651315073,
+ 'info_type.info': -0.0602309353081989,
+ 'keyword.id': -0.06199980892458581,
+ 'keyword.keyword': 0.012403638029269005,
+ 'keyword.phonetic_code': 0.026518597241305935,
+ 'kind_type.id': 0.03444519517676701,
+ 'kind_type.kind': -0.0027836270004551827,
+ 'link_type.id': 0.007880377532311163,
+ 'link_type.link': 0.0105286085540711,
+ 'movie_companies.company_id': -0.08803374015003387,
+ 'movie_companies.company_type_id': 0.0031809816189868464,
+ 'movie_companies.id': 0.0008885242564947587,
+ 'movie_companies.movie_id': 0.007724622737104935,
+ 'movie_companies.note': -0.031954293142124515,
+ 'movie_info.id': -0.019002100941525598,
+ 'movie_info.info': 0.07941732811328621,
+ 'movie_info.info_type_id': -0.04050223260359135,
+ 'movie_info.movie_id': 0.3628733313135039,
+ 'movie_info.note': 0.0007408597152237994,
+ 'movie_info_idx.id': 0.007087948405100801,
+ 'movie_info_idx.info': -0.028100317829020973,
+ 'movie_info_idx.info_type_id': -0.05683426090376848,
+ 'movie_info_idx.movie_id': 0.05858247625612889,
+ 'movie_info_idx.note': 0.08640940536851352,
+ 'movie_keyword.id': 0.021429544520592824,
+ 'movie_keyword.keyword_id': 0.009285993449282296,
+ 'movie_keyword.movie_id': 0.014143024256110104,
+ 'movie_link.id': 0.13152757596957879,
+ 'movie_link.link_type_id': 0.0222519783600938,
+ 'movie_link.linked_movie_id': 0.2054369100246984,
+ 'movie_link.movie_id': 0.01325690909311363,
+ 'name.gender': -0.011101418364253171,
+ 'name.id': 0.5572535367929505,
+ 'name.imdb_id': -0.036501744868834625,
+ 'name.imdb_index': -0.06442158323496902,
+ 'name.md5sum': -0.0018319672790218255,
+ 'name.name': -0.006021071659947213,
+ 'name.name_pcode_cf': -0.14515043069442482,
+ 'name.name_pcode_nf': 0.019823863745583332,
+ 'name.surname_pcode': 0.059191344353421896,
+ 'person_info.id': 0.0065703659209714075,
+ 'person_info.info': 0.08448809258924121,
+ 'person_info.info_type_id': 0.16346482595354336,
+ 'person_info.note': 0.046060546160550345,
+ 'person_info.person_id': 0.7062177091291085,
+ 'role_type.id': 0.006305342875671844,
+ 'role_type.role': 0.04326034938265201,
+ 'title.episode_nr': -0.02928165247900269,
+ 'title.episode_of_id': 0.011294261113426208,
+ 'title.id': -0.009626586904359928,
+ 'title.imdb_id': 0.03472215908237915,
+ 'title.imdb_index': 0.03230186808193758,
+ 'title.kind_id': 0.016248853797138436,
+ 'title.md5sum': -0.024513849079409924,
+ 'title.phonetic_code': -0.054068481632200065,
+ 'title.production_year': 0.006380398432337034,
+ 'title.season_nr': 0.3559627104970801,
+ 'title.series_years': -0.07361417829015685,
+ 'title.title': -0.06489384697366378}
+episode 0 >> step 0
+action_type = random
+action = company_name,company_name.id,CREATE
+reward = 0.0011755248529709344
+episode 0 >> step 1
+action_type = random
+action = movie_info_idx,movie_info_idx.info,CREATE
+reward = 0.0011755248529709344
+episode 0 >> step 2
+action_type = random
+action = char_name,char_name.md5sum,CREATE
+reward = 0.0011755248529709344
+episode 0 >> step 3
+action_type = random
+action = title,title.imdb_index,CREATE
+reward = 0.0011755248529709344
+episode 0 >> step 4
+action_type = random
+action = complete_cast,complete_cast.subject_id,CREATE
+reward = 0.0011755248529709344
+episode 0 >> step 5
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 0 >> step 6
+action_type = random
+action = company_name,company_name.name_pcode_sf,CREATE
+reward = 0.07609406204684489
+episode 0 >> step 7
+action_type = random
+action = info_type,info_type.id,CREATE
+reward = 0.07609455615993739
+episode 0 >> step 8
+action_type = random
+action = comp_cast_type,comp_cast_type.id,CREATE
+reward = 0.07609455615993739
+episode 0 >> step 9
+action_type = random
+action = name,name.name_pcode_nf,CREATE
+reward = 0.08131342169639916
+episode 0 >> step 10
+action_type = random
+action = movie_info,movie_info.note,CREATE
+reward = 0.08131342169639916
+episode 0 >> step 11
+action_type = random
+action = name,name.gender,CREATE
+reward = 0.08123595986506414
+episode 0 >> step 12
+action_type = random
+action = cast_info,cast_info.nr_order,CREATE
+reward = 0.08123595986506414
+episode 0 >> step 13
+action_type = random
+action = title,title.production_year,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 14
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 15
+action_type = random
+action = complete_cast,complete_cast.movie_id,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 16
+action_type = random
+action = name,name.imdb_index,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 17
+action_type = random
+action = aka_title,aka_title.kind_id,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 18
+action_type = random
+action = movie_info_idx,movie_info_idx.note,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 19
+action_type = random
+action = person_info,person_info.note,CREATE
+reward = 0.08397378884768898
+episode 0 >> step 20
+action_type = random
+action = movie_info_idx,movie_info_idx.movie_id,CREATE
+reward = 0.09383319233855987
+episode 0 >> step 21
+action_type = random
+action = movie_companies,movie_companies.movie_id,CREATE
+reward = 0.1019096808015448
+episode 0 >> step 22
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.1019096808015448
+episode 0 >> step 23
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.1019096808015448
+episode 0 >> step 24
+action_type = random
+action = cast_info,cast_info.note,CREATE
+reward = 0.1019096808015448
+episode 1 >> step 0
+action_type = random
+action = aka_name,aka_name.name_pcode_cf,CREATE
+reward = 0.0
+episode 1 >> step 1
+action_type = random
+action = complete_cast,complete_cast.subject_id,CREATE
+reward = 0.0
+episode 1 >> step 2
+action_type = random
+action = aka_name,aka_name.imdb_index,CREATE
+reward = 0.0
+episode 1 >> step 3
+action_type = random
+action = movie_companies,movie_companies.id,CREATE
+reward = 0.0
+episode 1 >> step 4
+action_type = random
+action = aka_title,aka_title.id,CREATE
+reward = 0.0
+episode 1 >> step 5
+action_type = random
+action = movie_link,movie_link.id,CREATE
+reward = 0.0
+episode 1 >> step 6
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07507838476636994
+episode 1 >> step 7
+action_type = random
+action = keyword,keyword.keyword,CREATE
+reward = 0.07557309927272976
+episode 1 >> step 8
+action_type = random
+action = complete_cast,complete_cast.id,CREATE
+reward = 0.07557309927272976
+episode 1 >> step 9
+action_type = random
+action = aka_name,aka_name.imdb_index,CREATE
+reward = 0.07557309927272976
+episode 1 >> step 10
+action_type = random
+action = cast_info,cast_info.person_role_id,CREATE
+reward = 0.07557309927272976
+episode 1 >> step 11
+action_type = random
+action = movie_info,movie_info.id,CREATE
+reward = 0.07557309927272976
+episode 1 >> step 12
+action_type = random
+action = info_type,info_type.id,CREATE
+reward = 0.07557359338582238
+episode 1 >> step 13
+action_type = random
+action = movie_companies,movie_companies.id,CREATE
+reward = 0.07557359338582238
+episode 1 >> step 14
+action_type = random
+action = role_type,role_type.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 15
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 16
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 17
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 18
+action_type = random
+action = aka_name,aka_name.name_pcode_nf,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 19
+action_type = random
+action = name,name.imdb_id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 20
+action_type = random
+action = title,title.kind_id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 21
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 22
+action_type = random
+action = info_type,info_type.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 23
+action_type = random
+action = comp_cast_type,comp_cast_type.id,CREATE
+reward = 0.07557411001881455
+episode 1 >> step 24
+action_type = random
+action = keyword,keyword.id,CREATE
+reward = 0.0769575352737088
+episode 2 >> step 0
+action_type = random
+action = title,title.season_nr,CREATE
+reward = 0.0
+episode 2 >> step 1
+action_type = random
+action = title,title.production_year,CREATE
+reward = 0.002404098641343919
+episode 2 >> step 2
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 3
+action_type = random
+action = cast_info,cast_info.nr_order,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 4
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 5
+action_type = random
+action = movie_link,movie_link.id,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 6
+action_type = random
+action = company_name,company_name.name_pcode_sf,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 7
+action_type = random
+action = info_type,info_type.info,CREATE
+reward = 0.07771630885059728
+episode 2 >> step 8
+action_type = random
+action = cast_info,cast_info.role_id,CREATE
+reward = 0.1670931005060784
+episode 2 >> step 9
+action_type = random
+action = cast_info,cast_info.role_id,CREATE
+reward = 0.1670931005060784
+episode 2 >> step 10
+action_type = random
+action = movie_info_idx,movie_info_idx.movie_id,CREATE
+reward = 0.1753055714090682
+episode 2 >> step 11
+action_type = random
+action = keyword,keyword.id,CREATE
+reward = 0.1768443806598754
+episode 2 >> step 12
+action_type = random
+action = company_name,company_name.md5sum,CREATE
+reward = 0.1768443806598754
+episode 2 >> step 13
+action_type = random
+action = aka_name,aka_name.name,CREATE
+reward = 0.1768443806598754
+episode 2 >> step 14
+action_type = random
+action = char_name,char_name.id,CREATE
+reward = 0.1768443806598754
+episode 2 >> step 15
+action_type = random
+action = company_name,company_name.id,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 16
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 17
+action_type = random
+action = cast_info,cast_info.role_id,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 18
+action_type = random
+action = char_name,char_name.md5sum,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 19
+action_type = random
+action = aka_name,aka_name.name_pcode_cf,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 20
+action_type = random
+action = aka_title,aka_title.imdb_index,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 21
+action_type = random
+action = movie_link,movie_link.link_type_id,CREATE
+reward = 0.17817647379054166
+episode 2 >> step 22
+action_type = random
+action = keyword,keyword.keyword,CREATE
+reward = 0.1786711876345515
+episode 2 >> step 23
+action_type = random
+action = movie_info_idx,movie_info_idx.info,CREATE
+reward = 0.1786711876345515
+episode 2 >> step 24
+action_type = random
+action = name,name.id,CREATE
+reward = 0.1786711876345515
+episode 3 >> step 0
+action_type = random
+action = char_name,char_name.name_pcode_nf,CREATE
+reward = 0.0
+episode 3 >> step 1
+action_type = random
+action = aka_title,aka_title.season_nr,CREATE
+reward = 0.0
+episode 3 >> step 2
+action_type = random
+action = person_info,person_info.info,CREATE
+reward = 0.0
+episode 3 >> step 3
+action_type = random
+action = company_name,company_name.imdb_id,CREATE
+reward = 0.0
+episode 3 >> step 4
+action_type = random
+action = company_name,company_name.name_pcode_nf,CREATE
+reward = 0.0
+episode 3 >> step 5
+action_type = random
+action = link_type,link_type.link,CREATE
+reward = 0.0
+episode 3 >> step 6
+action_type = random
+action = name,name.imdb_id,CREATE
+reward = 0.0
+episode 3 >> step 7
+action_type = random
+action = role_type,role_type.id,CREATE
+reward = 6.431418402634111e-07
+episode 3 >> step 8
+action_type = random
+action = aka_title,aka_title.kind_id,CREATE
+reward = 6.431418402634111e-07
+episode 3 >> step 9
+action_type = random
+action = aka_title,aka_title.imdb_index,CREATE
+reward = 6.431418402634111e-07
+episode 3 >> step 10
+action_type = random
+action = aka_title,aka_title.season_nr,CREATE
+reward = 6.431418402634111e-07
+episode 3 >> step 11
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 12
+action_type = random
+action = company_name,company_name.md5sum,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 13
+action_type = random
+action = kind_type,kind_type.kind,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 14
+action_type = random
+action = movie_info_idx,movie_info_idx.note,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 15
+action_type = random
+action = name,name.id,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 16
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 17
+action_type = random
+action = complete_cast,complete_cast.movie_id,CREATE
+reward = 0.07507890206171232
+episode 3 >> step 18
+action_type = random
+action = cast_info,cast_info.movie_id,CREATE
+reward = 0.4363929881746331
+episode 3 >> step 19
+action_type = random
+action = movie_info_idx,movie_info_idx.id,CREATE
+reward = 0.4363929881746331
+episode 3 >> step 20
+action_type = random
+action = complete_cast,complete_cast.movie_id,CREATE
+reward = 0.4363929881746331
+episode 3 >> step 21
+action_type = random
+action = kind_type,kind_type.id,CREATE
+reward = 0.43639351143112526
+episode 3 >> step 22
+action_type = random
+action = company_name,company_name.md5sum,CREATE
+reward = 0.43639351143112526
+episode 3 >> step 23
+action_type = random
+action = role_type,role_type.role,CREATE
+reward = 0.43639351143112526
+episode 3 >> step 24
+action_type = random
+action = name,name.gender,CREATE
+reward = 0.4363935220287251
+episode 4 >> step 0
+action_type = random
+action = aka_title,aka_title.movie_id,CREATE
+reward = 0.0
+episode 4 >> step 1
+action_type = random
+action = company_name,company_name.id,CREATE
+reward = 0.0011755248529709344
+episode 4 >> step 2
+action_type = random
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 3
+action_type = random
+action = aka_title,aka_title.movie_id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 4
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 5
+action_type = random
+action = char_name,char_name.name_pcode_nf,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 6
+action_type = random
+action = aka_name,aka_name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 7
+action_type = random
+action = name,name.imdb_id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 8
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 9
+action_type = random
+action = role_type,role_type.role,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 10
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 11
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 12
+action_type = random
+action = aka_name,aka_name.name_pcode_cf,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 13
+action_type = random
+action = name,name.imdb_index,CREATE
+reward = 0.07609406204684489
+episode 4 >> step 14
+action_type = random
+action = cast_info,cast_info.person_id,CREATE
+reward = 0.2091781002233975
+episode 4 >> step 15
+action_type = random
+action = title,title.title,CREATE
+reward = 0.21360914548650745
+episode 4 >> step 16
+action_type = random
+action = cast_info,cast_info.movie_id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 17
+action_type = random
+action = link_type,link_type.id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 18
+action_type = random
+action = complete_cast,complete_cast.status_id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 19
+action_type = random
+action = char_name,char_name.md5sum,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 20
+action_type = random
+action = title,title.episode_nr,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 21
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 22
+action_type = random
+action = company_name,company_name.imdb_id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 23
+action_type = argmax
+action = name,name.id,CREATE
+reward = 0.49732605500508936
+episode 4 >> step 24
+action_type = random
+action = movie_link,movie_link.movie_id,CREATE
+reward = 0.49732605500508936
+max epsiode reward is 0.49732605500508936
+avg epsiode reward is 0.2582515961487239
+test time: 7.472185325622559
