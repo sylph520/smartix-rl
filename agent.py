@@ -10,6 +10,8 @@ class Agent:
 
     MAX_TRAINING_EPISODES = 30
     MAX_STEPS_PER_EPISODE = 100
+    # MAX_TRAINING_EPISODES = 1
+    # MAX_STEPS_PER_EPISODE = 1
 
 
     def __init__(self):
@@ -175,12 +177,14 @@ class Agent:
             weight_path = f'{self.env.benchmark.benchmark}_model_weights.pkl'
         with open(weight_path, 'wb') as f:
             pickle.dump(model_weight_dict, f)
+        print(f"saved weights to {weight_path}")
 
     def load_weigths(self, weight_path: str=''):
         if not weight_path:
             weight_path = f'{self.env.benchmark.benchmark}_model_weights.pkl'
         with open(weight_path, 'rb') as f:
             model_weight_dict = pickle.load(f)
+        print(f"loaded weights from {weight_path}")
         return model_weight_dict
 
     def train(self, env):
@@ -209,7 +213,7 @@ class Agent:
             for step in range(self.MAX_STEPS_PER_EPISODE):
 
                 # Log step
-                print(">>step =", step)
+                print(f">>episode{episode} step {step}")
                 # print("\n\nEpisode {}/{} @ Step {}".format(episode, self.MAX_TRAINING_EPISODES, step))
 
                 # Get action
